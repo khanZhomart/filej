@@ -4,8 +4,8 @@ import java.io.File;
 
 public class ListContentCommand extends DirCommand {
 
-    public ListContentCommand(boolean verbose, File dir) {
-        super(verbose, dir);
+    public ListContentCommand(boolean verbose, String dirname) {
+        super(verbose, dirname);
     }
 
     @Override

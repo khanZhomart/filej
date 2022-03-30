@@ -1,8 +1,25 @@
 package com.filej;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import com.filej.commands.Command;
+import com.filej.controllers.CommandController;
+import com.filej.controllers.StateController;
+import com.filej.states.TreeState;
+import com.filej.utils.constants.Colors;
+import com.filej.utils.constants.Commands;
+import com.filej.utils.models.Input;
+
 /**
  * Консольное приложение, в котором будут шорт-команды. 
-
  * Будет слушатель, который будет обрабатывать вводимую команду с консоли.
 
  * Стартовый каталог с командами:
@@ -24,9 +41,39 @@ package com.filej;
  *      del [optional: -v | --verbose] [optional: -f | --force] <filename>
  *      rmd [optional: -v | --verbose] [optional: -f | --force] <dirname>
  */
+
 public class App {
-    
-    public static void main( String[] args ) {
-        System.out.println( "\u001B[31m Hello World! \u001B[0m" );
+    private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
+    private static final CommandController commandController = new CommandController();
+    private static final StateController stateController = new StateController();
+    private static Input input;
+
+    public static void main(String[] args) throws Exception {
+        clearWindow();
+        run();
+    }
+
+    static void run() throws Exception {
+        while (true) {
+            displayPath();
+            String[] args = reader.readLine().split(" ");
+            
+            if (args.length > 1 && args.length < 4)
+                input = new Input.Builder()
+                    .command(args[0])
+                    .args(args)
+                    .build();
+
+            Command command = commandController.defineType(input);
+            command.run();
+        }
+    }
+
+    static void clearWindow() {
+        System.out.println(Colors.ANSI_CLS);
+    }
+
+    static void displayPath() {
+        System.out.print(stateController.getCurrentPath() + "> ");
     }
 }

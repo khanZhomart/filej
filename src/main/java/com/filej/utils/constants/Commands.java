@@ -1,5 +1,9 @@
 package com.filej.utils.constants;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Commands {
     public static final String MAKE_DIR = "md";
     public static final String CHANGE_DIR = "cd";
@@ -9,4 +13,9 @@ public class Commands {
     public static final String WRITE_FILE = "write";
     public static final String READ_FILE = "read";
     public static final String DELETE_FILE = "del";
+
+    public static class Options {
+        public static final List<String> VERBOSE = new ArrayList<>(Arrays.asList("-v", "--verbose"));
+        public static final List<String> FORCE = new ArrayList<>(Arrays.asList("-f", "--force"));
+    }
 }

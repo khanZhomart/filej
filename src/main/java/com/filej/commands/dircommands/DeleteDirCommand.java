@@ -5,8 +5,8 @@ import java.io.File;
 public class DeleteDirCommand extends DirCommand {
     private boolean force;
 
-    public DeleteDirCommand(boolean verbose, boolean force, File dir) {
-        super(verbose, dir);
+    public DeleteDirCommand(boolean verbose, boolean force, String dirname) {
+        super(verbose, dirname);
         this.force = force;
     }
 
