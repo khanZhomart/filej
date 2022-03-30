@@ -51,12 +51,6 @@ public class App {
             WindowUtil.displayPath(stateController.getCurrentPath());
             String[] args = reader.readLine().split(" ");
             
-            if (args[0].equals("pwd")) {
-                System.out.println("real path: " + stateController.getRealPath() + "\nproject path: " + stateController.getCurrentPath());
-                WindowUtil.startNewLine();
-                continue;
-            }
-
             if (args.length > 1 && args.length < 4)
                 input = new Input.Builder()
                     .command(args[0])
