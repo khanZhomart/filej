@@ -12,7 +12,7 @@ public class TreeState {
 
     private TreeState() {
         this.currentPath = new ArrayList<>(Arrays.asList("root"));
-        this.realPath = "src\\main\\java\\com\\home\\root\\";
+        this.realPath = "src\\main\\java\\com\\~\\root\\";
     }
 
     public static TreeState getInstance() {

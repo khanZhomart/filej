@@ -24,14 +24,14 @@ import com.filej.utils.models.Input;
  *      "обработка исключений"
  *
  * Наименование команд:
- *      md <dirname>
- *      cd <dirname>
- *      list <dirname> | .
+ *      md <dirname> [готово]
+ *      cd <dirname> [готово]
+ *      list <dirname> | . [готово]
+ *      rmd [optional: -v | --verbose] [optional: -f | --force] <dirname>
  *      touch [optional: -v | --verbose] <filename>
  *      write [optional: -v | --verbose] <string> <filename>
  *      read [optional: -v | --verbose] <filename>
  *      del [optional: -v | --verbose] [optional: -f | --force] <filename>
- *      rmd [optional: -v | --verbose] [optional: -f | --force] <dirname>
  */
 
 public class App {
@@ -42,7 +42,7 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         WindowUtil.clearWindow();
-            run();
+        run();
     }
 
     static void run() throws Exception {
@@ -63,6 +63,8 @@ public class App {
                 Command command = commandController.defineType(input);
                 command.run();
             } catch (NoSuchElementException e) {
+                System.out.println(e.getMessage());
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
 

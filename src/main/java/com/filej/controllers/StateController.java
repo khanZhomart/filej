@@ -6,7 +6,6 @@ public class StateController {
     private final TreeState state = TreeState.getInstance();
 
     public void pushToPath(String path) {
-        
         state.addPath(path);
     }
 
