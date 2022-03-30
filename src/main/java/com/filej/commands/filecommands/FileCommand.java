@@ -1,31 +1,31 @@
 package com.filej.commands.filecommands;
 
-import java.io.File;
-
 import com.filej.commands.Command;
+import com.filej.controllers.StateController;
 
 public abstract class FileCommand implements Command {
+    protected StateController stateController = new StateController();
     protected boolean verbose;
-    protected File file;
+    protected String filename;
 
-    public FileCommand(boolean verbose, File file) {
+    public FileCommand(boolean verbose, String filename) {
         this.verbose = verbose;
-        this.file = file;
+        this.filename = filename;
     }
 
     public boolean verbose() {
         return this.verbose;
     }
 
-    public File getFile() {
-        return this.file;
+    public String getFile() {
+        return this.filename;
     }
 
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
     }
 
-    public void setFile(File file){
-        this.file = file;
+    public void setFile(String filename){
+        this.filename = filename;
     }
 }

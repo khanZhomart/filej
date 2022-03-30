@@ -4,6 +4,9 @@ import com.filej.utils.constants.Colors;
 
 public class WindowUtil {
     
+    public static void greeting() {
+        System.out.println("*** fileJ, v0.1 ***\n");
+    }
 
     public static void clearWindow() {
         System.out.println(Colors.ANSI_CLS);

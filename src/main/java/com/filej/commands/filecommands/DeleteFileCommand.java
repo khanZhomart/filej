@@ -1,12 +1,10 @@
 package com.filej.commands.filecommands;
 
-import java.io.File;
-
 public class DeleteFileCommand extends FileCommand {
     private boolean force;
 
-    public DeleteFileCommand(boolean verbose, boolean force, File file) {
-        super(verbose, file);
+    public DeleteFileCommand(boolean verbose, boolean force, String filename) {
+        super(verbose, filename);
         this.force = force;
     }
 
