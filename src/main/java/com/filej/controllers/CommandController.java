@@ -1,10 +1,10 @@
 package com.filej.controllers;
 
 import com.filej.commands.Command;
-import com.filej.commands.HelpCommand;
-import com.filej.commands.PwdCommand;
 import com.filej.commands.dircommands.*;
 import com.filej.commands.filecommands.*;
+import com.filej.commands.utilcommands.HelpCommand;
+import com.filej.commands.utilcommands.PwdCommand;
 import com.filej.utils.constants.Commands;
 import com.filej.utils.models.Input;
 
@@ -25,7 +25,7 @@ public class CommandController {
                 return new DeleteDirCommand(input.verbose(), false, input.getTarget());
 
             case Commands.TOUCH_FILE:
-                return new TouchFileCommand(false, null);
+                return new TouchFileCommand(input.verbose(), input.getTarget());
 
             case Commands.WRITE_FILE:
                 return new WriteFileCommand(false, null);
@@ -43,7 +43,7 @@ public class CommandController {
                 return new HelpCommand();
 
             default:
-                throw new IllegalArgumentException("Invalid command, type \"help\" to see the list of available commands.");
+                throw new IllegalArgumentException("error: invalid command, type \"help\" to see the list of available commands.");
         }
     }
 }

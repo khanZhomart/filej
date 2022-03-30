@@ -1,5 +1,6 @@
-package com.filej.commands;
+package com.filej.commands.utilcommands;
 
+import com.filej.commands.Command;
 import com.filej.controllers.StateController;
 
 public class PwdCommand implements Command {

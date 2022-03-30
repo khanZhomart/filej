@@ -70,7 +70,7 @@ public class App {
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             } catch (NullPointerException e) {
-                System.out.println("Arguments are not specifed.");
+                System.out.println("error: arguments are not specifed.");
             }
 
             WindowUtil.startNewLine();

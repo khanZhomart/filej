@@ -12,7 +12,7 @@ public class ChangeDirectoryCommand extends DirCommand {
     @Override
     public void run() throws Exception {
         if (!directoryExists())
-            throw new NoSuchElementException("Directory does not exist");
+            throw new NoSuchElementException("error: directory does not exist");
 
         if (dirname.equals(".."))
             this.stateController.popFromPath();
