@@ -1,7 +1,5 @@
 package com.filej.commands.dircommands;
 
-import java.io.File;
-
 public class DeleteDirCommand extends DirCommand {
     private boolean force;
 

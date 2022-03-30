@@ -1,7 +1,5 @@
 package com.filej.commands.dircommands;
 
-import java.io.File;
-
 import com.filej.commands.Command;
 import com.filej.controllers.StateController;
 

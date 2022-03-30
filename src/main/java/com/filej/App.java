@@ -1,21 +1,13 @@
 package com.filej;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.NoSuchElementException;
 
 import com.filej.commands.Command;
 import com.filej.controllers.CommandController;
 import com.filej.controllers.StateController;
-import com.filej.states.TreeState;
 import com.filej.utils.constants.Colors;
-import com.filej.utils.constants.Commands;
 import com.filej.utils.models.Input;
 
 /**
@@ -50,7 +42,7 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         clearWindow();
-        run();
+            run();
     }
 
     static void run() throws Exception {
@@ -65,7 +57,14 @@ public class App {
                     .build();
 
             Command command = commandController.defineType(input);
-            command.run();
+
+            try {
+                command.run();
+            } catch (NoSuchElementException e) {
+                System.out.println(e.getMessage());
+            }
+
+            startNewLine();
         }
     }
 
@@ -74,6 +73,10 @@ public class App {
     }
 
     static void displayPath() {
-        System.out.print(stateController.getCurrentPath() + "> ");
+        System.out.print(Colors.ANSI_YELLOW + stateController.getCurrentPath() + Colors.ANSI_RESET + "> ");
+    }
+
+    static void startNewLine() {
+        System.out.println();
     }
 }

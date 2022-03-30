@@ -12,7 +12,7 @@ public class TreeState {
 
     private TreeState() {
         this.currentPath = new ArrayList<>(Arrays.asList("root"));
-        this.realPath = "src/main/java/com/home/root/";
+        this.realPath = "src\\main\\java\\com\\home\\root\\";
     }
 
     public static TreeState getInstance() {
@@ -32,7 +32,7 @@ public class TreeState {
 
     public void addPath(String path) {
         currentPath.add(path);
-        realPath.concat(path + "/");
+        realPath = realPath.concat(path + "\\");
     }
 
     public void popPath() {
@@ -45,6 +45,6 @@ public class TreeState {
 
     public String toString() {
         return currentPath.stream()
-            .reduce("", (result, element) -> result + "/" + element);
+            .reduce("", (result, element) -> result + "\\" + element);
     }
 }

@@ -1,7 +1,5 @@
 package com.filej.controllers;
 
-import java.io.File;
-
 import com.filej.commands.Command;
 import com.filej.commands.dircommands.*;
 import com.filej.commands.filecommands.*;
