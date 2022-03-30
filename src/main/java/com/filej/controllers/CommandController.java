@@ -1,6 +1,7 @@
 package com.filej.controllers;
 
 import com.filej.commands.Command;
+import com.filej.commands.HelpCommand;
 import com.filej.commands.dircommands.*;
 import com.filej.commands.filecommands.*;
 import com.filej.utils.constants.Commands;
@@ -33,6 +34,9 @@ public class CommandController {
 
             case Commands.DELETE_FILE:
                 return new DeleteFileCommand(false, false, null);
+
+            case Commands.HELP:
+                return new HelpCommand();
 
             default:
                 throw new IllegalArgumentException("Invalid command, type \"help\" to see the list of available commands.");

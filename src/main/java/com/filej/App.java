@@ -1,7 +1,6 @@
 package com.filej;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStreamReader;
 import java.util.NoSuchElementException;
 
@@ -64,6 +63,11 @@ public class App {
                     .args(args)
                     .build();
 
+            if (args.length == 1)
+                input = new Input.Builder()
+                    .command(args[0])
+                    .build();
+
             try {
                 Command command = commandController.defineType(input);
                 command.run();
@@ -71,6 +75,8 @@ public class App {
                 System.out.println(e.getMessage());
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
+            } catch (NullPointerException e) {
+                System.out.println("Arguments are not specifed.");
             }
 
             WindowUtil.startNewLine();

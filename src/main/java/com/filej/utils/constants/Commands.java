@@ -13,6 +13,7 @@ public class Commands {
     public static final String WRITE_FILE = "write";
     public static final String READ_FILE = "read";
     public static final String DELETE_FILE = "del";
+    public static final String HELP = "help";
 
     public static class Options {
         public static final List<String> VERBOSE = new ArrayList<>(Arrays.asList("-v", "--verbose"));

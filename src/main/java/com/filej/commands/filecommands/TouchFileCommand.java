@@ -9,7 +9,7 @@ public class TouchFileCommand extends FileCommand {
         super(verbose, filename);
     }
 
-    @Overridec
+    @Override
     public void run() throws Exception {
         String path = this.stateController.getRealPath();
 
