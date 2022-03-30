@@ -11,7 +11,7 @@ public class ChangeDirectoryCommand extends DirCommand {
 
     @Override
     public void run() throws Exception {
-        if (!exists())
+        if (!directoryExists())
             throw new NoSuchElementException("Directory does not exist");
 
         if (dirname.equals(".."))
@@ -20,7 +20,7 @@ public class ChangeDirectoryCommand extends DirCommand {
             this.stateController.pushToPath(dirname);
     }
 
-    private boolean exists() {
+    private boolean directoryExists() {
         File file = new File(this.stateController.getRealPath() + dirname);
         return file.exists();
     }

@@ -36,6 +36,7 @@ public class TreeState {
     }
 
     public void popPath() {
+        realPath = realPath.replace(currentPath.get(currentPath.size() - 1) + "\\", "");
         currentPath.remove(currentPath.size() - 1);
     }
 

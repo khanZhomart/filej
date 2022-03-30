@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 import com.filej.commands.Command;
 import com.filej.controllers.CommandController;
 import com.filej.controllers.StateController;
-import com.filej.utils.constants.Colors;
+import com.filej.utils.WindowUtil;
 import com.filej.utils.models.Input;
 
 /**
@@ -41,42 +41,32 @@ public class App {
     private static Input input;
 
     public static void main(String[] args) throws Exception {
-        clearWindow();
+        WindowUtil.clearWindow();
             run();
     }
 
     static void run() throws Exception {
         while (true) {
-            displayPath();
+            WindowUtil.displayPath(stateController.getCurrentPath());
             String[] args = reader.readLine().split(" ");
             
+            if (args[0].equals("log"))
+                System.out.println(">>> " + stateController.getRealPath() + "\n>>> " + stateController.getCurrentPath());
+
             if (args.length > 1 && args.length < 4)
                 input = new Input.Builder()
                     .command(args[0])
                     .args(args)
                     .build();
 
-            Command command = commandController.defineType(input);
-
             try {
+                Command command = commandController.defineType(input);
                 command.run();
             } catch (NoSuchElementException e) {
                 System.out.println(e.getMessage());
             }
 
-            startNewLine();
+            WindowUtil.startNewLine();
         }
-    }
-
-    static void clearWindow() {
-        System.out.println(Colors.ANSI_CLS);
-    }
-
-    static void displayPath() {
-        System.out.print(Colors.ANSI_YELLOW + stateController.getCurrentPath() + Colors.ANSI_RESET + "> ");
-    }
-
-    static void startNewLine() {
-        System.out.println();
     }
 }
