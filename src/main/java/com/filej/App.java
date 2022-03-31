@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.util.NoSuchElementException;
 
 import com.filej.controllers.CommandController;
-import com.filej.controllers.StateController;
 import com.filej.utils.WindowUtil;
 import com.filej.utils.models.Input;
 
@@ -48,17 +47,11 @@ public class App {
         while (true) {
             WindowUtil.displayPath();
             String[] args = reader.readLine().split(" ");
-            
-            if (args.length > 1 && args.length < 4)
-                input = new Input.Builder()
-                    .command(args[0])
-                    .args(args)
-                    .build();
 
-            if (args.length == 1)
-                input = new Input.Builder()
-                    .command(args[0])
-                    .build();
+            input = new Input.Builder()
+                .command(args[0])
+                .args(args)
+                .build();
 
             try {
                 commandController.defineType(input).run();

@@ -43,6 +43,9 @@ public class Input {
         }
 
         public Builder args(String args[]) {
+            if (args.length <= 1 || args.length >= 4)
+                return this;
+
             if (Commands.Options.containsVerbose(args))
                 this.verbose = true;
 
