@@ -28,8 +28,8 @@ import com.filej.utils.models.Input;
  *      +list <dirname> | .                                                  
  *      +rmd [optional: -v | --verbose] [optional: -f | --force] <dirname>   
  *      +touch [optional: -v | --verbose] <filename>                         
- *      write [optional: -v | --verbose] <string> <filename>
- *      read [optional: -v | --verbose] <filename>
+ *      +write [optional: -v | --verbose] <string> <filename>
+ *      +read [optional: -v | --verbose] <filename>
  *      +del [optional: -v | --verbose] [optional: -f | --force] <filename>
  */
 
@@ -44,30 +44,39 @@ public class App {
         run();
     }
 
-    //  разбивка метода на несколько методов, отделив бесконечный цикл
-    static void run() throws Exception {
+    private static void run() throws Exception {
         while (true) {
             WindowUtil.displayPath();
             String res = reader.readLine();
-            String[] args = res.split(" ");
 
-            input = new Input.Builder()
-                .command(args[0])
-                .args(args)
-                .build();
-
-            try {
-                Command command = commandController.defineType(input); 
-                command.run();
-            } catch (NoSuchElementException e) {
-                System.out.println(e.getMessage());
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            } catch (NullPointerException e) {
-                System.out.println("error: arguments are not specifed.");
+            if (res.isBlank()) {
+                continue;
             }
 
+            String[] args = res.split(" ");
+
+            proccessInput(args);
             WindowUtil.startNewLine();
+        }
+    }
+
+    private static void proccessInput(String[] args) {
+        input = new Input.Builder()
+            .command(args[0])
+            .args(args)
+            .build();
+
+        try {
+            Command command = commandController.defineType(input); 
+            command.run();
+        } catch (NoSuchElementException e) {
+            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("error: arguments are not specifed.");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }
