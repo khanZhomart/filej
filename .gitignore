@@ -18,4 +18,7 @@ buildNumber.properties
 
 src/main/java/com/~/
 
-*.vscode/
+.vscode/
+
+.apt_generated/
+.apt_generated_tests/
