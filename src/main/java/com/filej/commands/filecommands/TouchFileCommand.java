@@ -3,6 +3,8 @@ package com.filej.commands.filecommands;
 import java.io.File;
 import java.io.IOException;
 
+import com.filej.utils.FileUtil;
+
 public class TouchFileCommand extends FileCommand {
 
     public TouchFileCommand(boolean verbose, String filename) {
@@ -11,12 +13,11 @@ public class TouchFileCommand extends FileCommand {
     }
 
     @Override
-    public void run() throws Exception {
-        try {
-            File file = new File(this.path);
-            file.createNewFile();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void run() throws IOException, IllegalArgumentException {
+        if (FileUtil.fileExists(this.path))
+            throw new IllegalArgumentException("error: provided file already exists");
+
+        File file = new File(this.path);
+        file.createNewFile();
     }    
 }

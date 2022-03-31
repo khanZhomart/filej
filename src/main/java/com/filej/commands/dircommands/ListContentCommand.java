@@ -1,6 +1,8 @@
 package com.filej.commands.dircommands;
 
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -12,7 +14,7 @@ public class ListContentCommand extends DirCommand {
     }
 
     @Override
-    public void run() throws Exception {
+    public void run() throws InvalidPathException, IOException {
         Path dirPath;
 
         if (dirname.equals(".")) {

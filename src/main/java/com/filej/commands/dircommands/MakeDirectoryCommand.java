@@ -10,12 +10,8 @@ public class MakeDirectoryCommand extends DirCommand {
     }
 
     @Override
-    public void run() {
-        try {
-            File dir = new File(this.path);
-            dir.mkdir();
-        } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
+    public void run() throws NullPointerException {
+        File dir = new File(this.path);
+        dir.mkdir();
     }
 }

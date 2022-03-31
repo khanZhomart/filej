@@ -9,6 +9,9 @@ import com.filej.controllers.CommandController;
 import com.filej.utils.WindowUtil;
 import com.filej.utils.models.Input;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Консольное приложение, в котором будут шорт-команды. 
  * Будет слушатель, который будет обрабатывать вводимую команду с консоли.
@@ -34,12 +37,13 @@ import com.filej.utils.models.Input;
  */
 
 public class App {
+    public static final Logger logger = LoggerFactory.getLogger(App.class);
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
     private static final CommandController commandController = new CommandController();
     private static Input input;
 
     public static void main(String[] args) throws Exception {
-        WindowUtil.clearWindow();
+        logger.info("starting application");
         WindowUtil.showTitle();
         run();
     }
@@ -69,9 +73,7 @@ public class App {
         try {
             Command command = commandController.defineType(input); 
             command.run();
-        } catch (NoSuchElementException e) {
-            System.out.println(e.getMessage());
-        } catch (IllegalArgumentException e) {
+        } catch (NoSuchElementException | IllegalArgumentException e) {
             System.out.println(e.getMessage());
         } catch (NullPointerException e) {
             System.out.println("error: arguments are not specifed.");

@@ -1,6 +1,7 @@
 package com.filej.commands.filecommands;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import com.filej.utils.FileUtil;
@@ -15,7 +16,7 @@ public class DeleteFileCommand extends FileCommand {
     }
 
     @Override
-    public void run() throws Exception {
+    public void run() throws IOException, NullPointerException {
         if (!FileUtil.fileExists(this.path)) {
             throw new NoSuchElementException("error: file does not exist.");
         }

@@ -16,12 +16,15 @@ public class DeleteDirCommand extends DirCommand {
     }
 
     @Override
-    public void run() throws Exception {
-        if (!directoryExists()) throw new NoSuchElementException("error: directory does not exist");
+    public void run() throws NoSuchElementException {
+        if (!directoryExists()) {
+            throw new NoSuchElementException("error: directory does not exist");
+        } 
 
-        if (!force)
+        if (!force) {
             if (!confirmed())
                 return;
+        }
 
         if (verbose)
             System.out.println("deleting " + dirname + "...");
