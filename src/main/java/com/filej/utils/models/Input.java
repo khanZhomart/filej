@@ -5,11 +5,13 @@ import com.filej.utils.constants.Commands;
 public class Input {
     private String command;
     private boolean verbose;
+    private boolean force;
     private String target;
 
     private Input(Builder builder) {
         this.command = builder.command;
         this.verbose = builder.verbose;
+        this.force = builder.force;
         this.target = builder.target;
     }
 
@@ -21,6 +23,10 @@ public class Input {
         return this.verbose;
     }
 
+    public boolean force() {
+        return this.force;
+    }
+
     public String getTarget() {
         return this.target;
     }
@@ -28,6 +34,7 @@ public class Input {
     public static class Builder {
         private String command;
         private boolean verbose;
+        private boolean force;
         private String target;
 
         public Builder command(String command) {
@@ -36,12 +43,13 @@ public class Input {
         }
 
         public Builder args(String args[]) {
-            if (args.length == 3 && Commands.Options.VERBOSE.contains(args[1])) {
+            if (Commands.Options.containsVerbose(args))
                 this.verbose = true;
-                this.target = args[2];
-            } else {
-                this.target = args[1];
-            }
+
+            if (Commands.Options.containsForce(args))
+                this.force = true;
+
+            this.target = args[args.length - 1];
 
             return this;
         }

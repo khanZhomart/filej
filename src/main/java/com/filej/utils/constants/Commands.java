@@ -19,5 +19,21 @@ public class Commands {
     public static class Options {
         public static final List<String> VERBOSE = new ArrayList<>(Arrays.asList("-v", "--verbose"));
         public static final List<String> FORCE = new ArrayList<>(Arrays.asList("-f", "--force"));
+
+        public static boolean containsVerbose(String[] args) {
+            for (String arg : args)
+                if (VERBOSE.contains(arg))
+                    return true;
+
+            return false;
+        }
+
+        public static boolean containsForce(String[] args) {
+            for (String arg : args)
+                if (FORCE.contains(arg))
+                    return true;
+
+            return false;
+        }
     }
 }

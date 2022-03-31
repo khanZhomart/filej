@@ -22,7 +22,7 @@ public class CommandController {
                 return new ListContentCommand(input.verbose(), input.getTarget());
 
             case Commands.DELETE_DIR:
-                return new DeleteDirCommand(input.verbose(), false, input.getTarget());
+                return new DeleteDirCommand(input.verbose(), input.force(), input.getTarget());
 
             case Commands.TOUCH_FILE:
                 return new TouchFileCommand(input.verbose(), input.getTarget());
@@ -34,7 +34,7 @@ public class CommandController {
                 return new ReadFileCommand(false, null);
 
             case Commands.DELETE_FILE:
-                return new DeleteFileCommand(false, false, null);
+                return new DeleteFileCommand(input.verbose(), input.force(), input.getTarget());
 
             case Commands.PWD:
                 return new PwdCommand();

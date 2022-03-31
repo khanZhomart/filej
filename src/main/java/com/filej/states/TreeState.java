@@ -30,6 +30,10 @@ public class TreeState {
         return realPath;
     }
 
+    public void setCurrentPath(List<String> currentPath) {
+        this.currentPath = currentPath;
+    } 
+
     public void addPath(String path) {
         currentPath.add(path);
         realPath = realPath.concat(path + "\\");
@@ -39,10 +43,6 @@ public class TreeState {
         realPath = realPath.replace(currentPath.get(currentPath.size() - 1) + "\\", "");
         currentPath.remove(currentPath.size() - 1);
     }
-
-    public void setCurrentPath(List<String> currentPath) {
-        this.currentPath = currentPath;
-    } 
 
     public String toString() {
         return currentPath.stream()

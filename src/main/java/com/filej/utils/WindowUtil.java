@@ -1,10 +1,12 @@
 package com.filej.utils;
 
+import com.filej.controllers.StateController;
 import com.filej.utils.constants.Colors;
 
 public class WindowUtil {
-    
-    public static void greeting() {
+    private static final StateController stateController = new StateController();
+
+    public static void showTitle() {
         System.out.println("*** fileJ, v0.1 ***\n");
     }
 
@@ -12,8 +14,8 @@ public class WindowUtil {
         System.out.println(Colors.ANSI_CLS);
     }
 
-    public static void displayPath(String path) {
-        System.out.print(Colors.ANSI_YELLOW + path + Colors.ANSI_RESET + "> ");
+    public static void displayPath() {
+        System.out.print(Colors.ANSI_YELLOW + stateController.getCurrentPath() + Colors.ANSI_RESET + "> ");
     }
 
     public static void startNewLine() {
