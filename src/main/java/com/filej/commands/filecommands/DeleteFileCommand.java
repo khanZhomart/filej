@@ -2,31 +2,36 @@ package com.filej.commands.filecommands;
 
 import java.io.File;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
+
+import com.filej.utils.FileUtil;
 
 public class DeleteFileCommand extends FileCommand {
-    private final Scanner scan = new Scanner(System.in);
     private boolean force;
 
     public DeleteFileCommand(boolean verbose, boolean force, String filename) {
         super(verbose, filename);
         this.force = force;
+        this.path = this.stateController.getRealPath() + filename;
     }
 
     @Override
     public void run() throws Exception {
-        if (!fileExists())
+        if (!FileUtil.fileExists(this.path)) {
             throw new NoSuchElementException("error: file does not exist.");
+        }
 
-        if (!force)
-            if (!confirmed())
+        if (!force) {
+            if (!FileUtil.confirmed(filename)) {
                 return;
+            }
+        }
 
-        if (verbose)
+        if (verbose) {
             System.out.println("deleting " + filename + "...");
+        }
 
-        File file = new File(this.stateController.getRealPath() + filename);
-
+        File file = new File(this.path);
+        FileUtil.clearFile(this.path);
         file.delete();
     }
 
@@ -36,18 +41,5 @@ public class DeleteFileCommand extends FileCommand {
 
     public void setForce(boolean force) {
         this.force = force;
-    }
-
-    private boolean fileExists() {
-        File file = new File(this.stateController.getRealPath() + filename);
-        return file.exists();
-    }
-
-    private boolean confirmed() {
-        System.out.print("prompt: are you sure you want to delete " + filename + "? (y/n): ");
-
-        String answer = scan.next();
-
-        return answer.toLowerCase().equals("y");
     }
 }

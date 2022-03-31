@@ -28,10 +28,10 @@ public class CommandController {
                 return new TouchFileCommand(input.verbose(), input.getTarget());
 
             case Commands.WRITE_FILE:
-                return new WriteFileCommand(false, null);
+                return new WriteFileCommand(input.verbose(), input.getTarget());
 
             case Commands.READ_FILE:
-                return new ReadFileCommand(false, null);
+                return new ReadFileCommand(input.verbose(), input.getTarget());
 
             case Commands.DELETE_FILE:
                 return new DeleteFileCommand(input.verbose(), input.force(), input.getTarget());

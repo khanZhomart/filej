@@ -6,6 +6,7 @@ import com.filej.controllers.StateController;
 public abstract class FileCommand implements Command {
     protected StateController stateController = new StateController();
     protected boolean verbose;
+    protected String path;
     protected String filename;
 
     public FileCommand(boolean verbose, String filename) {

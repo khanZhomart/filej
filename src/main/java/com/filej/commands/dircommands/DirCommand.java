@@ -6,6 +6,7 @@ import com.filej.controllers.StateController;
 public abstract class DirCommand implements Command {
     protected StateController stateController = new StateController();
     protected boolean verbose;
+    protected String path;
     protected String dirname;
 
     public DirCommand(boolean verbose, String dirname) {
