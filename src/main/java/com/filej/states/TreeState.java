@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TreeState {
-    private static TreeState instance;
+public enum TreeState {
+    INSTANCE;
 
     private List<String> currentPath;
     private String realPath;
@@ -14,13 +14,6 @@ public class TreeState {
         this.currentPath = new ArrayList<>(Arrays.asList("root")); // вынести в статичный блок инициализацию значений
         this.realPath = "src\\main\\java\\com\\~\\root\\";
     }   // вынести значения в конфиг файл
-
-    public static TreeState getInstance() {
-        if (instance == null)   // сделать потокобезопасным
-            instance = new TreeState();
-
-        return instance;
-    }
 
     // написать тест с положительным и негативным сценарием
     public List<String> getCurrentPath() {

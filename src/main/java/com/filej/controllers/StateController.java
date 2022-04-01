@@ -3,7 +3,7 @@ package com.filej.controllers;
 import com.filej.states.TreeState;
 
 public class StateController {
-    private final TreeState state = TreeState.getInstance();
+    private final TreeState state = TreeState.INSTANCE;
 
     public void pushToPath(String path) {
         state.addPath(path);
