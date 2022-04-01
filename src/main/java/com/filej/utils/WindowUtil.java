@@ -15,7 +15,7 @@ public class WindowUtil {
     }
 
     public static void displayPath() {
-        System.out.print(Colors.ANSI_YELLOW + stateController.getCurrentPath() + Colors.ANSI_RESET + "> ");
+        System.out.print(Colors.ANSI_YELLOW + stateController.getPseudoPath() + Colors.ANSI_RESET + "> ");
     }
 
     public static void startNewLine() {

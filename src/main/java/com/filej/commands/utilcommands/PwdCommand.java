@@ -8,7 +8,7 @@ public class PwdCommand implements Command {
 
     @Override
     public void run() throws Exception {
-        System.out.println("real path: " + stateController.getRealPath() + "\nproject path: " + stateController.getCurrentPath());        
+        System.out.println("real_path: " + stateController.getRealPath() + "\npseudo_path: " + stateController.getPseudoPath());        
     }
     
 }

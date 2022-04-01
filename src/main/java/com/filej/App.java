@@ -53,6 +53,10 @@ public class App {
             WindowUtil.displayPath();
             String res = reader.readLine();
 
+            if (res == null) {
+                System.exit(1);
+            }
+
             if (res.isBlank()) {
                 continue;
             }

@@ -13,7 +13,7 @@ public class StateController {
         state.popPath();
     }
 
-    public String getCurrentPath() {
+    public String getPseudoPath() {
         return state.toString();
     }
 

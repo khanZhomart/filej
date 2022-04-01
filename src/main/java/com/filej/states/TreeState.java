@@ -4,46 +4,51 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public enum TreeState {
     INSTANCE;
 
-    private List<String> currentPath;
-    private String realPath;
+    public static final Logger logger = LoggerFactory.getLogger(TreeState.class);
+    private static List<String> pseudoPath;
+    private static String realPath;
 
-    private TreeState() {
-        this.currentPath = new ArrayList<>(Arrays.asList("root")); // вынести в статичный блок инициализацию значений
-        this.realPath = "src\\main\\java\\com\\~\\root\\";
-    }   // вынести значения в конфиг файл
+    static {
+        pseudoPath = new ArrayList<>(Arrays.asList("root"));
+        realPath = "src\\main\\java\\com\\~\\root\\";
+    }
 
     // написать тест с положительным и негативным сценарием
     public List<String> getCurrentPath() {
-        return new ArrayList<>(currentPath);
+        return new ArrayList<>(pseudoPath);
     }
 
     public String getRealPath() {
         return realPath;
     }
 
-    public void setCurrentPath(List<String> currentPath) {
-        this.currentPath = currentPath;
+    public void setPseudoPath(List<String> payload) {
+        pseudoPath = payload;
     } 
 
     // тест 
     public void addPath(String path) {
-        currentPath.add(path);
+        pseudoPath.add(path);
         realPath = realPath.concat(path + "\\");
     }
 
 
     // test
     public void popPath() {
-        realPath = realPath.replace(currentPath.get(currentPath.size() - 1) + "\\", "");
-        currentPath.remove(currentPath.size() - 1);
+        realPath = realPath.replace(pseudoPath.get(pseudoPath.size() - 1) + "\\", "");
+        pseudoPath.remove(pseudoPath.size() - 1);
     }
 
     // тест с сравнением временем выполнения декларативного и императивного решения (10 элементов)
     public String toString() {
-        return currentPath.stream()
+        return pseudoPath.stream()
             .reduce("", (result, element) -> result + "\\" + element);
     }
 }
