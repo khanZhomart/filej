@@ -1,8 +1,7 @@
-package com.filej;
+package com.filej.commands;
 
 import static org.junit.Assert.assertThrows;
 
-import com.filej.commands.Command;
 import com.filej.commands.filecommands.DeleteFileCommand;
 import com.filej.commands.filecommands.TouchFileCommand;
 
@@ -13,8 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class AppTest {
-    private static final Logger logger = LoggerFactory.getLogger(AppTest.class);
+public class TouchCommandTest {
+    private static final Logger logger = LoggerFactory.getLogger(TouchCommandTest.class);
     private Command command;
     private final String testFile = "test.txt";
 
@@ -36,7 +35,7 @@ public class AppTest {
             IllegalArgumentException.class,
             () -> {
                 command = new TouchFileCommand(false, testFile);
-                logger.info("trying to create duplicate file " + testFile + "...");
+                logger.warn("trying to create duplicate file " + testFile + "...");
                 command.run();
             }
         );
