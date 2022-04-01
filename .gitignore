@@ -18,7 +18,13 @@ buildNumber.properties
 
 src/main/java/com/~/
 
-.vscode/
-
 .apt_generated/
 .apt_generated_tests/
+
+.vscode
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
