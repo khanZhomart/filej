@@ -29,11 +29,11 @@ public class DeleteFileCommand extends FileCommand {
         return localInstance;
     }
 
-    public Command acceptArgs(boolean v, boolean f, String fn) {
-        verbose = v;
-        force = f;
-        filename = fn;
-        path = stateController.getRealPath() + filename;
+    public Command acceptArgs(boolean verbose, boolean force, String filename) {
+        this.verbose = verbose;
+        this.force = force;
+        this.filename = filename;
+        this.path = stateController.getRealPath() + filename;
 
         return instance;
     }

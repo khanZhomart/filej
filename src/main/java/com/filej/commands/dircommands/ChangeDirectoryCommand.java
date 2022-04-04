@@ -24,10 +24,10 @@ public class ChangeDirectoryCommand extends DirCommand {
         return localInstance;
     }
 
-    public Command acceptArgs(boolean v, String dn) {
-        verbose = v;
-        dirname = dn;
-        path = stateController.getRealPath() + dirname;
+    public Command acceptArgs(boolean verbose, String dirname) {
+        this.verbose = verbose;
+        this.dirname = dirname;
+        this.path = stateController.getRealPath() + dirname;
 
         return instance;
     }

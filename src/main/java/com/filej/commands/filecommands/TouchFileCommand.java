@@ -25,10 +25,10 @@ public class TouchFileCommand extends FileCommand {
         return localInstance;
     }
 
-    public Command acceptArgs(boolean v, String fn) {
-        verbose = v;
-        filename = fn;
-        path = stateController.getRealPath() + filename;
+    public Command acceptArgs(boolean verbose, String filename) {
+        this.verbose = verbose;
+        this.filename = filename;
+        this.path = stateController.getRealPath() + filename;
 
         return instance;
     }

@@ -10,7 +10,7 @@ import com.filej.utils.CommonUtil;
 public class DeleteDirCommand extends DirCommand {
     private static volatile DeleteDirCommand instance;
 
-    private static boolean force;
+    private boolean force;
 
     public static Command getInstance() {
         DeleteDirCommand localInstance = instance;
@@ -28,11 +28,11 @@ public class DeleteDirCommand extends DirCommand {
         return localInstance;
     }
 
-    public Command acceptArgs(boolean v, boolean f, String dn) {
-        verbose = v;
-        force = f;
-        dirname = dn;
-        path = stateController.getRealPath() + dirname;
+    public Command acceptArgs(boolean verbose, boolean force, String dirname) {
+        this.verbose = verbose;
+        this.force = force;
+        this.dirname = dirname;
+        this.path = stateController.getRealPath() + dirname;
 
         return instance;
     }    

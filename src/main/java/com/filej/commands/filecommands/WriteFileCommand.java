@@ -13,6 +13,7 @@ public class WriteFileCommand extends FileCommand {
 
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
     private BufferedWriter writer;
+    private String content;
 
     public static Command getInstance() {
         WriteFileCommand localInstance = instance;
@@ -30,10 +31,19 @@ public class WriteFileCommand extends FileCommand {
         return localInstance;
     }
 
-    public Command acceptArgs(boolean v, String fn) {
-        verbose = v;
-        filename = fn;
-        path = stateController.getRealPath() + filename;
+    public WriteFileCommand acceptArgs(boolean verbose, String content, String filename) {
+        this.verbose = verbose;
+        this.content = content;
+        this.filename = filename;
+        this.path = stateController.getRealPath() + filename;
+
+        return instance;
+    }
+
+    public Command acceptArgs(boolean verbose, String filename) {
+        this.verbose = verbose;
+        this.filename = filename;
+        this.path = stateController.getRealPath() + filename;
 
         return instance;
     }
@@ -44,7 +54,9 @@ public class WriteFileCommand extends FileCommand {
         FileWriter file = new FileWriter(path);
         writer = new BufferedWriter(file);
 
-        String content = getContentToWrite();
+        if (content == null) {
+            content = getContentToWrite();
+        }
 
         writer.write(content);
         writer.close();

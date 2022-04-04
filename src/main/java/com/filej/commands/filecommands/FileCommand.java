@@ -35,4 +35,9 @@ public abstract class FileCommand implements Command {
     public Command acceptArgs(boolean verbose, boolean force, String target) {
         return null;
     }
+
+    @Override
+    public Command acceptArgs(boolean verbose, String content, String target) {
+        return null;
+    }
 }

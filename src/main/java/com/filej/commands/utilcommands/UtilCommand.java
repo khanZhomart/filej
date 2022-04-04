@@ -8,13 +8,16 @@ public abstract class UtilCommand implements Command {
 
     @Override
     public Command acceptArgs(boolean verbose, String target) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public Command acceptArgs(boolean verbose, boolean force, String target) {
-        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Command acceptArgs(boolean verbose, String content, String target) {
         return null;
     }
 }

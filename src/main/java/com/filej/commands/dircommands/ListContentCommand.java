@@ -27,9 +27,9 @@ public class ListContentCommand extends DirCommand {
         return localInstance;
     }
 
-    public Command acceptArgs(boolean v, String dn) {
-        verbose = v;
-        dirname = dn;
+    public Command acceptArgs(boolean verbose, String dirname) {
+        this.verbose = verbose;
+        this.dirname = dirname;
 
         return instance;
     }
