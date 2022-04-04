@@ -5,15 +5,21 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-public class DeleteDirCommand extends DirCommand {
-    private final Scanner scan = new Scanner(System.in);
-    private boolean force;
+import com.filej.commands.Command;
 
-    public DeleteDirCommand(boolean verbose, boolean force, String dirname) {
-        super(verbose, dirname);
-        this.force = force;
-        this.path = this.stateController.getRealPath() + dirname;
-    }
+public class DeleteDirCommand extends DirCommand {
+    private static final DeleteDirCommand INSTANCE = new DeleteDirCommand();
+
+    private final Scanner scan = new Scanner(System.in);
+    private static boolean force;
+
+    public static Command getInstance(boolean v, boolean f, String dn) {
+        verbose = v;
+        force = f;
+        dirname = dn;
+        path = stateController.getRealPath() + dirname;
+        return INSTANCE;
+    }    
 
     @Override
     public void run() throws NoSuchElementException {
@@ -21,15 +27,15 @@ public class DeleteDirCommand extends DirCommand {
             throw new NoSuchElementException("error: directory does not exist");
         } 
 
-        if (!force) {
+        if (!this.getForce()) {
             if (!confirmed())
                 return;
         }
 
-        if (verbose)
+        if (this.getVerbose())
             System.out.println("deleting " + dirname + "...");
 
-        File dir = new File(this.path);
+        File dir = new File(path);
         File[] content = dir.listFiles();
 
         if (content != null)
@@ -40,7 +46,7 @@ public class DeleteDirCommand extends DirCommand {
         dir.delete();
     }
 
-    public boolean force() {
+    public boolean getForce() {
         return this.force;
     }
 
@@ -49,7 +55,7 @@ public class DeleteDirCommand extends DirCommand {
     }
 
     private boolean directoryExists() {
-        File file = new File(this.path);
+        File file = new File(path);
         return file.exists();
     }
 

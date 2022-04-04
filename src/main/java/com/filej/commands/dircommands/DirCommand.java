@@ -4,29 +4,24 @@ import com.filej.commands.Command;
 import com.filej.controllers.StateController;
 
 public abstract class DirCommand implements Command {
-    protected StateController stateController = new StateController();
-    protected boolean verbose;
-    protected String path;
-    protected String dirname;
+    protected static final StateController stateController = new StateController();
+    protected static boolean verbose;
+    protected static String path;
+    protected static String dirname;
 
-    public DirCommand(boolean verbose, String dirname) {
-        this.verbose = verbose;
-        this.dirname = dirname;
-    }
-
-    public boolean verbose() {
-        return this.verbose;
+    public boolean getVerbose() {
+        return verbose;
     }
 
     public String getDir() {
-        return this.dirname;
+        return dirname;
     }
 
-    public void setVerbose(boolean verbose) {
-        this.verbose = verbose;
+    public void setVerbose(boolean v) {
+        verbose = v;
     }
 
-    public void setDir(String dirname) {
-        this.dirname = dirname;
+    public void setDirname(String dn) {
+        dirname = dn;
     }
 }

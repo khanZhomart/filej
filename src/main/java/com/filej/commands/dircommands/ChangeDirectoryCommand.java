@@ -3,11 +3,15 @@ package com.filej.commands.dircommands;
 import java.io.File;
 import java.util.NoSuchElementException;
 
-public class ChangeDirectoryCommand extends DirCommand {
+import com.filej.commands.Command;
 
-    public ChangeDirectoryCommand(boolean verbose, String dirname) {
-        super(verbose, dirname);
-        this.path = this.stateController.getRealPath() + dirname;
+public class ChangeDirectoryCommand extends DirCommand {
+    private static final ChangeDirectoryCommand INSTANCE = new ChangeDirectoryCommand();
+
+    public static Command getInstance(boolean v, String dn) {
+        verbose = v;
+        dirname = dn;
+        return INSTANCE;
     }
 
     @Override
@@ -17,9 +21,9 @@ public class ChangeDirectoryCommand extends DirCommand {
         }
         
         if (dirname.equals("..")) {
-            this.stateController.popFromPath();
+            stateController.popFromPath();
         } else {
-            this.stateController.pushToPath(dirname);
+            stateController.pushToPath(dirname);
         }
     }
 

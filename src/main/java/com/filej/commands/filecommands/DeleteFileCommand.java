@@ -4,20 +4,25 @@ import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
+import com.filej.commands.Command;
 import com.filej.utils.FileUtil;
 
 public class DeleteFileCommand extends FileCommand {
-    private boolean force;
+    private static final DeleteFileCommand INSTANCE = new DeleteFileCommand(); 
 
-    public DeleteFileCommand(boolean verbose, boolean force, String filename) {
-        super(verbose, filename);
-        this.force = force;
-        this.path = this.stateController.getRealPath() + filename;
+    private static boolean force;
+
+    public static Command getInstance(boolean v, boolean f, String fn) {
+        verbose = v;
+        force = f;
+        filename = fn;
+        path = stateController.getRealPath() + filename;
+        return INSTANCE;
     }
 
     @Override
     public void run() throws IOException, NullPointerException {
-        if (!FileUtil.fileExists(this.path)) {
+        if (!FileUtil.fileExists(path)) {
             throw new NoSuchElementException("error: file does not exist.");
         }
 
@@ -31,16 +36,16 @@ public class DeleteFileCommand extends FileCommand {
             System.out.println("deleting " + filename + "...");
         }
 
-        File file = new File(this.path);
-        FileUtil.clearFile(this.path);
+        File file = new File(path);
+        FileUtil.clearFile(path);
         file.delete();
     }
 
     public boolean force() {
-        return this.force;
+        return force;
     }
 
-    public void setForce(boolean force) {
-        this.force = force;
+    public void setForce(boolean f) {
+        force = f;
     }
 }
