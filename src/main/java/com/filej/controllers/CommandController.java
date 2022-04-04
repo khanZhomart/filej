@@ -12,29 +12,37 @@ public class CommandController {
     
     public Command defineType(Input input) throws IllegalArgumentException {
         switch (input.getCommand()) {
-            case Commands.MAKE_DIR: 
-                return MakeDirectoryCommand.getInstance(input.verbose(), input.getTarget());
+            case Commands.MAKE_DIR:
+                return MakeDirectoryCommand.getInstance()
+                    .acceptArgs(input.verbose(), input.getTarget());
 
             case Commands.CHANGE_DIR: 
-                return ChangeDirectoryCommand.getInstance(input.verbose(), input.getTarget());
+                return ChangeDirectoryCommand.getInstance()
+                    .acceptArgs(input.verbose(), input.getTarget());
 
             case Commands.LIST_CONTENT_DIR:
-                return ListContentCommand.getInstance(input.verbose(), input.getTarget());
+                return ListContentCommand.getInstance()
+                    .acceptArgs(input.verbose(), input.getTarget());
 
             case Commands.DELETE_DIR:
-                return DeleteDirCommand.getInstance(input.verbose(), input.force(), input.getTarget());
+                return DeleteDirCommand.getInstance()
+                    .acceptArgs(input.verbose(), input.force(), input.getTarget());
 
             case Commands.TOUCH_FILE:
-                return TouchFileCommand.getInstance(input.verbose(), input.getTarget());
+                return TouchFileCommand.getInstance()
+                    .acceptArgs(input.verbose(), input.getTarget());
 
             case Commands.WRITE_FILE:
-                return WriteFileCommand.getInstance(input.verbose(), input.getTarget());
+                return WriteFileCommand.getInstance()
+                    .acceptArgs(input.verbose(), input.getTarget());
 
             case Commands.READ_FILE:
-                return ReadFileCommand.getInstance(input.verbose(), input.getTarget());
+                return ReadFileCommand.getInstance()
+                    .acceptArgs(input.verbose(), input.getTarget());
 
             case Commands.DELETE_FILE:
-                return DeleteFileCommand.getInstance(input.verbose(), input.force(), input.getTarget());
+                return DeleteFileCommand.getInstance()
+                    .acceptArgs(input.verbose(), input.force(), input.getTarget());
 
             case Commands.PWD:
                 return PwdCommand.getInstance();

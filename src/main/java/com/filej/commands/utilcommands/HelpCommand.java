@@ -4,10 +4,22 @@ import com.filej.commands.Command;
 import com.filej.utils.constants.Colors;
 
 public class HelpCommand extends UtilCommand {
-    private static final HelpCommand INSTANCE = new HelpCommand();
+    private static volatile HelpCommand instance;
 
     public static Command getInstance() {
-        return INSTANCE;
+        HelpCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (HelpCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new HelpCommand();
+                }
+            }
+        }
+
+        return localInstance;
     }
 
     @Override

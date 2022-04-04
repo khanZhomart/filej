@@ -5,9 +5,10 @@ import com.filej.controllers.StateController;
 
 public abstract class DirCommand implements Command {
     protected static final StateController stateController = new StateController();
-    protected static boolean verbose;
-    protected static String path;
-    protected static String dirname;
+    
+    protected boolean verbose;
+    protected String path;
+    protected String dirname;
 
     public boolean getVerbose() {
         return verbose;
@@ -23,5 +24,15 @@ public abstract class DirCommand implements Command {
 
     public void setDirname(String dn) {
         dirname = dn;
+    }
+
+    @Override
+    public Command acceptArgs(boolean verbose, String target) {
+        return null;
+    }
+
+    @Override
+    public Command acceptArgs(boolean verbose, boolean force, String target) {
+        return null;
     }
 }

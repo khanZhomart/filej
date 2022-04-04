@@ -9,12 +9,29 @@ import java.nio.file.Paths;
 import com.filej.commands.Command;
 
 public class ListContentCommand extends DirCommand {
-    private static final ListContentCommand INSTANCE = new ListContentCommand();
+    private static volatile ListContentCommand instance;
 
-    public static Command getInstance(boolean v, String dn) {
+    public static Command getInstance() {
+        ListContentCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (ListContentCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new ListContentCommand();
+                }
+            }
+        }
+
+        return localInstance;
+    }
+
+    public Command acceptArgs(boolean v, String dn) {
         verbose = v;
         dirname = dn;
-        return INSTANCE;
+
+        return instance;
     }
 
     @Override

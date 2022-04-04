@@ -9,15 +9,32 @@ import com.filej.commands.Command;
 import com.filej.utils.constants.Colors;
 
 public class ReadFileCommand extends FileCommand {
-    private static final ReadFileCommand INSTANCE = new ReadFileCommand();
+    private static volatile ReadFileCommand instance;
 
     private BufferedReader reader;
 
-    public static Command getInstance(boolean v, String fn) {
+    public static Command getInstance() {
+        ReadFileCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (ReadFileCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new ReadFileCommand();
+                }
+            }
+        }
+
+        return localInstance;
+    }
+
+    public Command acceptArgs(boolean v, String fn) {
         verbose = v;
         filename = fn;
         path = stateController.getRealPath() + filename;
-        return INSTANCE;
+
+        return instance;
     }
 
     //test

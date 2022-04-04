@@ -7,13 +7,30 @@ import com.filej.commands.Command;
 import com.filej.utils.CommonUtil;
 
 public class TouchFileCommand extends FileCommand {
-    private static final TouchFileCommand INSTANCE = new TouchFileCommand();
+    private static volatile TouchFileCommand instance;
 
-    public static Command getInstance(boolean v, String fn) {
+    public static Command getInstance() {
+        TouchFileCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (TouchFileCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new TouchFileCommand();
+                }
+            }
+        }
+
+        return localInstance;
+    }
+
+    public Command acceptArgs(boolean v, String fn) {
         verbose = v;
         filename = fn;
         path = stateController.getRealPath() + filename;
-        return INSTANCE;
+
+        return instance;
     }
 
     @Override

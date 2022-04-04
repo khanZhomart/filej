@@ -9,16 +9,33 @@ import com.filej.utils.CommonUtil;
 import com.filej.utils.FileUtil;
 
 public class DeleteFileCommand extends FileCommand {
-    private static final DeleteFileCommand INSTANCE = new DeleteFileCommand(); 
+    private static volatile DeleteFileCommand instance;
 
-    private static boolean force;
+    private boolean force;
 
-    public static Command getInstance(boolean v, boolean f, String fn) {
+    public static Command getInstance() {
+        DeleteFileCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (DeleteFileCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new DeleteFileCommand();
+                }
+            }
+        }
+
+        return localInstance;
+    }
+
+    public Command acceptArgs(boolean v, boolean f, String fn) {
         verbose = v;
         force = f;
         filename = fn;
         path = stateController.getRealPath() + filename;
-        return INSTANCE;
+
+        return instance;
     }
 
     @Override

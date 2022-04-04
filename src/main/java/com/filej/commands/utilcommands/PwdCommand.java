@@ -3,10 +3,22 @@ package com.filej.commands.utilcommands;
 import com.filej.commands.Command;
 
 public class PwdCommand extends UtilCommand {
-    private static final PwdCommand INSTANCE = new PwdCommand();
+    private static volatile PwdCommand instance;
 
     public static Command getInstance() {
-        return INSTANCE;
+        PwdCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (PwdCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new PwdCommand();
+                }
+            }
+        }
+
+        return localInstance;
     }
     
     @Override

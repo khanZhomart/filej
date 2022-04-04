@@ -9,16 +9,33 @@ import java.io.InputStreamReader;
 import com.filej.commands.Command;
 
 public class WriteFileCommand extends FileCommand {
-    private static final WriteFileCommand INSTANCE = new WriteFileCommand();
+    private static volatile WriteFileCommand instance;
 
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
     private BufferedWriter writer;
 
-    public static Command getInstance(boolean v, String fn) {
+    public static Command getInstance() {
+        WriteFileCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (WriteFileCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new WriteFileCommand();
+                }
+            }
+        }
+
+        return localInstance;
+    }
+
+    public Command acceptArgs(boolean v, String fn) {
         verbose = v;
         filename = fn;
         path = stateController.getRealPath() + filename;
-        return INSTANCE;
+
+        return instance;
     }
 
     //test

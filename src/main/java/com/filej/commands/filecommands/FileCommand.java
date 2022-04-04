@@ -5,9 +5,10 @@ import com.filej.controllers.StateController;
 
 public abstract class FileCommand implements Command {
     protected static final StateController stateController = new StateController();
-    protected static boolean verbose;
-    protected static String path;
-    protected static String filename;
+
+    protected boolean verbose;
+    protected String path;
+    protected String filename;
 
     public boolean verbose() {
         return verbose;
@@ -23,5 +24,15 @@ public abstract class FileCommand implements Command {
 
     public void setFilename(String fn){
         filename = fn;
+    }
+
+    @Override
+    public Command acceptArgs(boolean verbose, String target) {
+        return null;
+    }
+
+    @Override
+    public Command acceptArgs(boolean verbose, boolean force, String target) {
+        return null;
     }
 }

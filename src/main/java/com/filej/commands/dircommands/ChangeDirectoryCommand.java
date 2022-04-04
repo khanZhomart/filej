@@ -1,19 +1,35 @@
 package com.filej.commands.dircommands;
 
-import java.io.File;
 import java.util.NoSuchElementException;
 
 import com.filej.commands.Command;
 import com.filej.utils.CommonUtil;
 
 public class ChangeDirectoryCommand extends DirCommand {
-    private static final ChangeDirectoryCommand INSTANCE = new ChangeDirectoryCommand();
+    private static volatile ChangeDirectoryCommand instance;
 
-    public static Command getInstance(boolean v, String dn) {
+    public static Command getInstance() {
+        ChangeDirectoryCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (ChangeDirectoryCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new ChangeDirectoryCommand();
+                }
+            }
+        }
+
+        return localInstance;
+    }
+
+    public Command acceptArgs(boolean v, String dn) {
         verbose = v;
         dirname = dn;
         path = stateController.getRealPath() + dirname;
-        return INSTANCE;
+
+        return instance;
     }
 
     @Override

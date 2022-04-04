@@ -8,16 +8,33 @@ import com.filej.commands.Command;
 import com.filej.utils.CommonUtil;
 
 public class DeleteDirCommand extends DirCommand {
-    private static final DeleteDirCommand INSTANCE = new DeleteDirCommand();
+    private static volatile DeleteDirCommand instance;
 
     private static boolean force;
 
-    public static Command getInstance(boolean v, boolean f, String dn) {
+    public static Command getInstance() {
+        DeleteDirCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (DeleteDirCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new DeleteDirCommand();
+                }
+            }
+        }
+
+        return localInstance;
+    }
+
+    public Command acceptArgs(boolean v, boolean f, String dn) {
         verbose = v;
         force = f;
         dirname = dn;
         path = stateController.getRealPath() + dirname;
-        return INSTANCE;
+
+        return instance;
     }    
 
     @Override
