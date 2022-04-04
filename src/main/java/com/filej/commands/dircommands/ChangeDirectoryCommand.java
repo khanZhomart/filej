@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.NoSuchElementException;
 
 import com.filej.commands.Command;
+import com.filej.utils.CommonUtil;
 
 public class ChangeDirectoryCommand extends DirCommand {
     private static final ChangeDirectoryCommand INSTANCE = new ChangeDirectoryCommand();
@@ -11,12 +12,13 @@ public class ChangeDirectoryCommand extends DirCommand {
     public static Command getInstance(boolean v, String dn) {
         verbose = v;
         dirname = dn;
+        path = stateController.getRealPath() + dirname;
         return INSTANCE;
     }
 
     @Override
     public void run() throws NoSuchElementException {
-        if (!directoryExists()) {
+        if (!CommonUtil.elementExists(path)) {
             throw new NoSuchElementException("error: directory does not exist");
         }
         
@@ -25,10 +27,5 @@ public class ChangeDirectoryCommand extends DirCommand {
         } else {
             stateController.pushToPath(dirname);
         }
-    }
-
-    private boolean directoryExists() {
-        File file = new File(path);
-        return file.exists();
     }
 }

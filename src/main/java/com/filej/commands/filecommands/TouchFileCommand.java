@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.filej.commands.Command;
-import com.filej.utils.FileUtil;
+import com.filej.utils.CommonUtil;
 
 public class TouchFileCommand extends FileCommand {
     private static final TouchFileCommand INSTANCE = new TouchFileCommand();
@@ -18,7 +18,7 @@ public class TouchFileCommand extends FileCommand {
 
     @Override
     public void run() throws IOException, IllegalArgumentException {
-        if (FileUtil.fileExists(path)) {
+        if (CommonUtil.elementExists(path)) {
             throw new IllegalArgumentException("error: provided file already exists");
         }
 

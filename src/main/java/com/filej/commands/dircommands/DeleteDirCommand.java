@@ -2,15 +2,14 @@ package com.filej.commands.dircommands;
 
 import java.io.File;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 import java.util.stream.Stream;
 
 import com.filej.commands.Command;
+import com.filej.utils.CommonUtil;
 
 public class DeleteDirCommand extends DirCommand {
     private static final DeleteDirCommand INSTANCE = new DeleteDirCommand();
 
-    private final Scanner scan = new Scanner(System.in);
     private static boolean force;
 
     public static Command getInstance(boolean v, boolean f, String dn) {
@@ -23,12 +22,12 @@ public class DeleteDirCommand extends DirCommand {
 
     @Override
     public void run() throws NoSuchElementException {
-        if (!directoryExists()) {
+        if (!CommonUtil.elementExists(path)) {
             throw new NoSuchElementException("error: directory does not exist");
         } 
 
         if (!this.getForce()) {
-            if (!confirmed())
+            if (!CommonUtil.confirmed(dirname))
                 return;
         }
 
@@ -47,21 +46,10 @@ public class DeleteDirCommand extends DirCommand {
     }
 
     public boolean getForce() {
-        return this.force;
+        return force;
     }
 
-    public void setForce(boolean force) {
-        this.force = force;
-    }
-
-    private boolean directoryExists() {
-        File file = new File(path);
-        return file.exists();
-    }
-
-    private boolean confirmed() {
-        System.out.print("prompt: are you sure you want to delete " + dirname + "? (y/n): ");
-        String answer = scan.next();
-        return answer.toLowerCase().equals("y");
+    public void setForce(boolean f) {
+        force = f;
     }
 }
