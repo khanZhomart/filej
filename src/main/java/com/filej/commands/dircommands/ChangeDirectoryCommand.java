@@ -1,30 +1,47 @@
 package com.filej.commands.dircommands;
 
-import java.io.File;
 import java.util.NoSuchElementException;
 
-public class ChangeDirectoryCommand extends DirCommand {
+import com.filej.commands.Command;
+import com.filej.utils.CommonUtil;
 
-    public ChangeDirectoryCommand(boolean verbose, String dirname) {
-        super(verbose, dirname);
-        this.path = this.stateController.getRealPath() + dirname;
+public class ChangeDirectoryCommand extends DirCommand {
+    private static volatile ChangeDirectoryCommand instance;
+
+    public static Command getInstance() {
+        ChangeDirectoryCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (ChangeDirectoryCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new ChangeDirectoryCommand();
+                }
+            }
+        }
+
+        return localInstance;
+    }
+
+    public Command acceptArgs(boolean v, String dn) {
+        verbose = v;
+        dirname = dn;
+        path = stateController.getRealPath() + dirname;
+
+        return instance;
     }
 
     @Override
     public void run() throws NoSuchElementException {
-        if (!directoryExists()) {
+        if (!CommonUtil.elementExists(path)) {
             throw new NoSuchElementException("error: directory does not exist");
         }
         
         if (dirname.equals("..")) {
-            this.stateController.popFromPath();
+            stateController.popFromPath();
         } else {
-            this.stateController.pushToPath(dirname);
+            stateController.pushToPath(dirname);
         }
-    }
-
-    private boolean directoryExists() {
-        File file = new File(path);
-        return file.exists();
     }
 }

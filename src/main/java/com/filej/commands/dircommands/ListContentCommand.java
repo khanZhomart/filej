@@ -6,11 +6,32 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class ListContentCommand extends DirCommand {
+import com.filej.commands.Command;
 
-    public ListContentCommand(boolean verbose, String dirname) {
-        super(verbose, dirname);
-        this.path = this.stateController.getRealPath() + dirname;
+public class ListContentCommand extends DirCommand {
+    private static volatile ListContentCommand instance;
+
+    public static Command getInstance() {
+        ListContentCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (ListContentCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new ListContentCommand();
+                }
+            }
+        }
+
+        return localInstance;
+    }
+
+    public Command acceptArgs(boolean v, String dn) {
+        verbose = v;
+        dirname = dn;
+
+        return instance;
     }
 
     @Override

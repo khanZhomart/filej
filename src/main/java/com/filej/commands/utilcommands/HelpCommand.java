@@ -3,7 +3,24 @@ package com.filej.commands.utilcommands;
 import com.filej.commands.Command;
 import com.filej.utils.constants.Colors;
 
-public class HelpCommand implements Command {
+public class HelpCommand extends UtilCommand {
+    private static volatile HelpCommand instance;
+
+    public static Command getInstance() {
+        HelpCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (HelpCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new HelpCommand();
+                }
+            }
+        }
+
+        return localInstance;
+    }
 
     @Override
     public void run() throws Exception {
@@ -19,5 +36,4 @@ public class HelpCommand implements Command {
 
         System.out.println(message);
     }
-    
 }

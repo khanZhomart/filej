@@ -6,19 +6,42 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.filej.commands.Command;
+
 public class WriteFileCommand extends FileCommand {
+    private static volatile WriteFileCommand instance;
+
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
     private BufferedWriter writer;
 
-    public WriteFileCommand(boolean verbose, String filename) {
-        super(verbose, filename);
-        this.path = this.stateController.getRealPath() + filename;
+    public static Command getInstance() {
+        WriteFileCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (WriteFileCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new WriteFileCommand();
+                }
+            }
+        }
+
+        return localInstance;
+    }
+
+    public Command acceptArgs(boolean v, String fn) {
+        verbose = v;
+        filename = fn;
+        path = stateController.getRealPath() + filename;
+
+        return instance;
     }
 
     //test
     @Override
     public void run() throws Exception {
-        FileWriter file = new FileWriter(this.path);
+        FileWriter file = new FileWriter(path);
         writer = new BufferedWriter(file);
 
         String content = getContentToWrite();
@@ -29,7 +52,7 @@ public class WriteFileCommand extends FileCommand {
         System.out.println("writer: successfully wrote to " + filename);
     }
 
-    public String getContentToWrite() {
+    private String getContentToWrite() {
         StringBuilder content = new StringBuilder();
         String line = "";
 

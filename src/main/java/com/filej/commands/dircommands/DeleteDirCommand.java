@@ -2,34 +2,56 @@ package com.filej.commands.dircommands;
 
 import java.io.File;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 import java.util.stream.Stream;
 
-public class DeleteDirCommand extends DirCommand {
-    private final Scanner scan = new Scanner(System.in);
-    private boolean force;
+import com.filej.commands.Command;
+import com.filej.utils.CommonUtil;
 
-    public DeleteDirCommand(boolean verbose, boolean force, String dirname) {
-        super(verbose, dirname);
-        this.force = force;
-        this.path = this.stateController.getRealPath() + dirname;
+public class DeleteDirCommand extends DirCommand {
+    private static volatile DeleteDirCommand instance;
+
+    private static boolean force;
+
+    public static Command getInstance() {
+        DeleteDirCommand localInstance = instance;
+
+        if (localInstance == null) {
+            synchronized (DeleteDirCommand.class) {
+                localInstance = instance;
+
+                if (localInstance == null) {
+                    instance = localInstance = new DeleteDirCommand();
+                }
+            }
+        }
+
+        return localInstance;
     }
+
+    public Command acceptArgs(boolean v, boolean f, String dn) {
+        verbose = v;
+        force = f;
+        dirname = dn;
+        path = stateController.getRealPath() + dirname;
+
+        return instance;
+    }    
 
     @Override
     public void run() throws NoSuchElementException {
-        if (!directoryExists()) {
+        if (!CommonUtil.elementExists(path)) {
             throw new NoSuchElementException("error: directory does not exist");
         } 
 
-        if (!force) {
-            if (!confirmed())
+        if (!this.getForce()) {
+            if (!CommonUtil.confirmed(dirname))
                 return;
         }
 
-        if (verbose)
+        if (this.getVerbose())
             System.out.println("deleting " + dirname + "...");
 
-        File dir = new File(this.path);
+        File dir = new File(path);
         File[] content = dir.listFiles();
 
         if (content != null)
@@ -40,22 +62,11 @@ public class DeleteDirCommand extends DirCommand {
         dir.delete();
     }
 
-    public boolean force() {
-        return this.force;
+    public boolean getForce() {
+        return force;
     }
 
-    public void setForce(boolean force) {
-        this.force = force;
-    }
-
-    private boolean directoryExists() {
-        File file = new File(this.path);
-        return file.exists();
-    }
-
-    private boolean confirmed() {
-        System.out.print("prompt: are you sure you want to delete " + dirname + "? (y/n): ");
-        String answer = scan.next();
-        return answer.toLowerCase().equals("y");
+    public void setForce(boolean f) {
+        force = f;
     }
 }
