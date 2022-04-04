@@ -19,7 +19,8 @@ public class TouchCommandTest {
 
     @Before
     public void init() {
-        command = new TouchFileCommand(false, testFile);
+        command = TouchFileCommand.getInstance()
+            .acceptArgs(false, testFile);
 
         try {
             command.run();
@@ -34,7 +35,9 @@ public class TouchCommandTest {
         assertThrows(
             IllegalArgumentException.class,
             () -> {
-                command = new TouchFileCommand(false, testFile);
+                command = TouchFileCommand.getInstance()
+                    .acceptArgs(false, testFile);
+
                 logger.warn("trying to create duplicate file " + testFile + "...");
                 command.run();
             }
@@ -43,7 +46,8 @@ public class TouchCommandTest {
 
     @After
     public void after() {
-        command = new DeleteFileCommand(false, true, testFile);
+        command = DeleteFileCommand.getInstance()
+            .acceptArgs(false, true, testFile);
         
         try {
             command.run();
