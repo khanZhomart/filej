@@ -26,7 +26,15 @@ public class WriteFileCommand extends FileCommand {
 
     //test
     @Override
-    public void run() throws Exception {
+    public void run() throws IllegalArgumentException, IOException {
+        if (filename == null) {
+            throw new IllegalArgumentException("error: filename can not be null.");
+        }
+
+        if (!CommonUtil.elementExists(this.path)) {
+            throw new IllegalArgumentException("error: invalid file");
+        }
+
         FileWriter file = new FileWriter(this.path);
         BufferedWriter writer = new BufferedWriter(file);
 

@@ -7,8 +7,8 @@ public class HelpCommand implements Command {
 
     @Override
     public void run() throws Exception {
-        String message = "> available commands:" + Colors.ANSI_YELLOW + 
-            "\nmd" + Colors.ANSI_RESET + " - create a directory" +
+        String message = "> available commands:" + 
+            "\n" + Colors.ANSI_YELLOW + "md <dirname>" + Colors.ANSI_RESET + " - create a directory" +
             "\n" + Colors.ANSI_YELLOW + "cd .. | <dirname>" + Colors.ANSI_RESET + " - change directory" +
             "\n" + Colors.ANSI_YELLOW + "list . | <dirname>" + Colors.ANSI_RESET + " - list directory content" +
             "\n" + Colors.ANSI_YELLOW + "rmd [flags: -v --verbose, -f --force] <dirname>" + Colors.ANSI_RESET + " - remove a directory" +

@@ -32,7 +32,6 @@ public class DeleteFileCommand extends FileCommand {
         }
 
         File file = new File(this.path);
-        FileUtil.clearFile(this.path);
         file.delete();
     }
 
