@@ -8,9 +8,15 @@ import java.io.InputStreamReader;
 
 public class WriteFileCommand extends FileCommand {
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
+    private String content;
     private BufferedWriter writer;
 
     public WriteFileCommand(boolean verbose, String filename) {
+        super(verbose, filename);
+        this.path = this.stateController.getRealPath() + filename;
+    }
+
+    public WriteFileCommand(boolean verbose, String content, String filename) {
         super(verbose, filename);
         this.path = this.stateController.getRealPath() + filename;
     }
@@ -21,7 +27,9 @@ public class WriteFileCommand extends FileCommand {
         FileWriter file = new FileWriter(this.path);
         writer = new BufferedWriter(file);
 
-        String content = getContentToWrite();
+        if (content == null) {
+            content = getContentToWrite();
+        }
 
         writer.write(content);
         writer.close();

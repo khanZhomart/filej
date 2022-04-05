@@ -23,69 +23,69 @@ public class ReadAndWriteCommandTest {
     private Command command;
     private String content = "hello, world!";
 
-    @Before
-    public void init()  {
-        try {
-            command = MakeDirectoryCommand.getInstance()
-                .acceptArgs(false, dirname);
+    // @Before
+    // public void init()  {
+    //     try {
+    //         command = MakeDirectoryCommand.getInstance()
+    //             .acceptArgs(false, dirname);
 
-            logger.info("Created directory " + dirname);
-            command.run();
+    //         logger.info("Created directory " + dirname);
+    //         command.run();
 
-            command = ChangeDirectoryCommand.getInstance()
-                .acceptArgs(false, dirname);
+    //         command = ChangeDirectoryCommand.getInstance()
+    //             .acceptArgs(false, dirname);
 
-            logger.info("Changed directory to " + dirname);
-            command.run();
+    //         logger.info("Changed directory to " + dirname);
+    //         command.run();
 
-            command = TouchFileCommand.getInstance()
-                .acceptArgs(false, filename);
+    //         command = TouchFileCommand.getInstance()
+    //             .acceptArgs(false, filename);
 
-            logger.info("Created file " + filename);
-            command.run();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-    }
+    //         logger.info("Created file " + filename);
+    //         command.run();
+    //     } catch (Exception e) {
+    //         logger.error(e.getMessage());
+    //     }
+    // }
 
-    @Test
-    public void Should_WriteToFileAndReadFrom() {
-        try {
-            command = WriteFileCommand.getInstance()
-                .acceptArgs(false, content, filename);
+    // @Test
+    // public void Should_WriteToFileAndReadFrom() {
+    //     try {
+    //         command = WriteFileCommand.getInstance()
+    //             .acceptArgs(false, content, filename);
 
-            logger.info("Writing '" + content + "' to " + dirname + "/" + filename);
-            command.run();
+    //         logger.info("Writing '" + content + "' to " + dirname + "/" + filename);
+    //         command.run();
 
-            command = ReadFileCommand.getInstance()
-                .acceptArgs(false, filename);
+    //         command = ReadFileCommand.getInstance()
+    //             .acceptArgs(false, filename);
 
-            logger.info("Reading from " + filename);
-            command.run();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }   
-    }
+    //         logger.info("Reading from " + filename);
+    //         command.run();
+    //     } catch (Exception e) {
+    //         logger.error(e.getMessage());
+    //     }   
+    // }
 
-    @After
-    public void after() {
-        try {
-            command = DeleteFileCommand.getInstance()
-                .acceptArgs(false, true, filename);
+    // @After
+    // public void after() {
+    //     try {
+    //         command = DeleteFileCommand.getInstance()
+    //             .acceptArgs(false, true, filename);
 
-            command.run();
+    //         command.run();
 
-            command = ChangeDirectoryCommand.getInstance()
-                .acceptArgs(false, "..");
+    //         command = ChangeDirectoryCommand.getInstance()
+    //             .acceptArgs(false, "..");
 
-            command.run();
+    //         command.run();
 
-            command = DeleteDirCommand.getInstance()
-                .acceptArgs(false, true, dirname);
+    //         command = DeleteDirCommand.getInstance()
+    //             .acceptArgs(false, true, dirname);
 
-            command.run();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }   
-    }
+    //         command.run();
+    //     } catch (Exception e) {
+    //         logger.error(e.getMessage());
+    //     }   
+    // }
 }
