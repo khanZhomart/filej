@@ -25,7 +25,7 @@ public class TouchCommandTest {
             command.run();
             logger.info("created " + testFile + " file.");
         } catch (Exception e) {
-            logger.warn(testFile + " file was already created. Skipping...");
+            e.printStackTrace();
         }
     }
 
@@ -35,7 +35,6 @@ public class TouchCommandTest {
             IllegalArgumentException.class,
             () -> {
                 command = new TouchFileCommand(false, testFile);
-                logger.warn("trying to create duplicate file " + testFile + "...");
                 command.run();
             }
         );
@@ -47,9 +46,8 @@ public class TouchCommandTest {
         
         try {
             command.run();
-            logger.info("deleted file " + testFile);
         } catch (Exception e) {
-            logger.error("something gone wrong...");
+            e.printStackTrace();
         }
     }
 }

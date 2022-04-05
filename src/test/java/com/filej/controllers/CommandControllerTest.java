@@ -21,7 +21,6 @@ public class CommandControllerTest {
 
     @Test
     public void should_ReturnIllegalArgumentException_When_InvalidCommandProvided() {
-        logger.info("Receiving invalid command " + "'" + commandName + "'");
         input = new Input.Builder()
             .command(commandName)
             .args(new String[] {"test"})
@@ -31,11 +30,9 @@ public class CommandControllerTest {
             "exception was thrown",
             IllegalArgumentException.class,
             () -> {
-                logger.warn("Trying to pass invalid command to controller...");
                 commandController.defineType(input);
             }
         );
-        logger.warn("Test has ended, initiating next one...");
     }
 
     @Test

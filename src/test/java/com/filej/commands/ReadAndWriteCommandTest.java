@@ -23,69 +23,48 @@ public class ReadAndWriteCommandTest {
     private Command command;
     private String content = "hello, world!";
 
-    // @Before
-    // public void init()  {
-    //     try {
-    //         command = MakeDirectoryCommand.getInstance()
-    //             .acceptArgs(false, dirname);
+    @Before
+    public void init()  {
+        try {
+            command = new MakeDirectoryCommand(false, dirname);
+            command.run();
 
-    //         logger.info("Created directory " + dirname);
-    //         command.run();
+            command = new ChangeDirectoryCommand(false, dirname);
+            command.run();
 
-    //         command = ChangeDirectoryCommand.getInstance()
-    //             .acceptArgs(false, dirname);
+            command = new TouchFileCommand(false, filename);
+            command.run();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+    }
 
-    //         logger.info("Changed directory to " + dirname);
-    //         command.run();
+    @Test
+    public void Should_WriteToFileAndReadFrom() {
+        try {
+            command = new WriteFileCommand(false, content, filename);
+            command.run();
 
-    //         command = TouchFileCommand.getInstance()
-    //             .acceptArgs(false, filename);
+            command = new ReadFileCommand(false, filename);
+            command.run();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }   
+    }
 
-    //         logger.info("Created file " + filename);
-    //         command.run();
-    //     } catch (Exception e) {
-    //         logger.error(e.getMessage());
-    //     }
-    // }
+    @After
+    public void after() {
+        try {
+            command = new DeleteFileCommand(false, true, filename);
+            command.run();
 
-    // @Test
-    // public void Should_WriteToFileAndReadFrom() {
-    //     try {
-    //         command = WriteFileCommand.getInstance()
-    //             .acceptArgs(false, content, filename);
+            command = new ChangeDirectoryCommand(false, "..");
+            command.run();
 
-    //         logger.info("Writing '" + content + "' to " + dirname + "/" + filename);
-    //         command.run();
-
-    //         command = ReadFileCommand.getInstance()
-    //             .acceptArgs(false, filename);
-
-    //         logger.info("Reading from " + filename);
-    //         command.run();
-    //     } catch (Exception e) {
-    //         logger.error(e.getMessage());
-    //     }   
-    // }
-
-    // @After
-    // public void after() {
-    //     try {
-    //         command = DeleteFileCommand.getInstance()
-    //             .acceptArgs(false, true, filename);
-
-    //         command.run();
-
-    //         command = ChangeDirectoryCommand.getInstance()
-    //             .acceptArgs(false, "..");
-
-    //         command.run();
-
-    //         command = DeleteDirCommand.getInstance()
-    //             .acceptArgs(false, true, dirname);
-
-    //         command.run();
-    //     } catch (Exception e) {
-    //         logger.error(e.getMessage());
-    //     }   
-    // }
+            command = new DeleteDirCommand(false, true, dirname);
+            command.run();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }   
+    }
 }

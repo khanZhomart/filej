@@ -2,14 +2,16 @@ package com.filej.commands.filecommands;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.filej.utils.CommonUtil;
+
 public class WriteFileCommand extends FileCommand {
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
     private String content;
-    private BufferedWriter writer;
 
     public WriteFileCommand(boolean verbose, String filename) {
         super(verbose, filename);
@@ -18,6 +20,7 @@ public class WriteFileCommand extends FileCommand {
 
     public WriteFileCommand(boolean verbose, String content, String filename) {
         super(verbose, filename);
+        this.content = content;
         this.path = this.stateController.getRealPath() + filename;
     }
 
@@ -25,16 +28,25 @@ public class WriteFileCommand extends FileCommand {
     @Override
     public void run() throws Exception {
         FileWriter file = new FileWriter(this.path);
-        writer = new BufferedWriter(file);
+        BufferedWriter writer = new BufferedWriter(file);
 
-        if (content == null) {
-            content = getContentToWrite();
+        try {
+            if (!CommonUtil.elementExists(this.path)) {
+                throw new FileNotFoundException();
+            }
+
+            if (content == null) {
+                content = getContentToWrite();
+            }
+    
+            writer.write(content);
+    
+            System.out.println("writer: successfully wrote to " + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            writer.close();
         }
-
-        writer.write(content);
-        writer.close();
-
-        System.out.println("writer: successfully wrote to " + filename);
     }
 
     public String getContentToWrite() {
