@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
-import com.filej.utils.FileUtil;
+import com.filej.utils.CommonUtil;
 
 public class DeleteFileCommand extends FileCommand {
     private boolean force;
@@ -17,12 +17,12 @@ public class DeleteFileCommand extends FileCommand {
 
     @Override
     public void run() throws IOException, NullPointerException {
-        if (!FileUtil.fileExists(this.path)) {
+        if (!CommonUtil.elementExists(this.path)) {
             throw new NoSuchElementException("error: file does not exist.");
         }
 
         if (!force) {
-            if (!FileUtil.confirmed(filename)) {
+            if (!CommonUtil.confirmed(filename)) {
                 return;
             }
         }

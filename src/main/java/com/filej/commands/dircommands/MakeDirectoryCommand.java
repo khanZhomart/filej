@@ -13,7 +13,7 @@ public class MakeDirectoryCommand extends DirCommand {
 
     @Override
     public void run() throws IllegalArgumentException {
-        if (!CommonUtil.elementExists(this.path)) {
+        if (CommonUtil.elementExists(this.path)) {
             throw new IllegalArgumentException("error: provided dirname is already existing.");
         }
 

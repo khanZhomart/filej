@@ -40,7 +40,7 @@ public class ReadAndWriteCommandTest {
     }
 
     @Test
-    public void Should_WriteToFileAndReadFrom() {
+    public void should_WriteToFileAndReadFrom() {
         try {
             command = new WriteFileCommand(false, content, filename);
             command.run();

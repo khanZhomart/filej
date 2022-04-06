@@ -30,7 +30,7 @@ public class TouchCommandTest {
     }
 
     @Test
-    public void Should_ReturnIllegalArgumentException_When_ProvidedFilenameExists() {
+    public void should_ReturnIllegalArgumentException_When_ProvidedFilenameExists() {
         assertThrows(
             IllegalArgumentException.class,
             () -> {
