@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import com.filej.utils.constants.Colors;
 
 public class ReadFileCommand extends FileCommand {
-    private BufferedReader reader;
 
     public ReadFileCommand(boolean verbose, String filename) {
         super(verbose, filename);
@@ -28,7 +27,7 @@ public class ReadFileCommand extends FileCommand {
 
     public String readFileContent() throws FileNotFoundException {
         FileReader file = new FileReader(this.path);
-        reader = new BufferedReader(file);
+        BufferedReader reader = new BufferedReader(file);
 
         return reader.lines()
             .collect(Collectors.joining(System.lineSeparator()));

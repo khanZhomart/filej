@@ -21,7 +21,6 @@ public class CommandControllerTest {
             .build();
 
         Assert.assertThrows(
-            "exception was thrown",
             IllegalArgumentException.class,
             () -> {
                 commandController.defineType(input);

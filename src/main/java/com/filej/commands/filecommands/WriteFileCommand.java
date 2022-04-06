@@ -2,7 +2,6 @@ package com.filej.commands.filecommands;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,34 +26,33 @@ public class WriteFileCommand extends FileCommand {
     //test
     @Override
     public void run() throws IllegalArgumentException, IOException {
-        if (filename == null) {
+        if (validateFilename(this.filename)) 
             throw new IllegalArgumentException("error: filename can not be null.");
-        }
-
+        
         if (!CommonUtil.elementExists(this.path)) {
             throw new IllegalArgumentException("error: invalid file");
         }
 
-        FileWriter file = new FileWriter(this.path);
+        writeToFile(this.path, this.filename);
+    }
+
+    private void writeToFile(String path, String filename) throws IOException {
+        FileWriter file = new FileWriter(path);
         BufferedWriter writer = new BufferedWriter(file);
 
         try {
-            if (!CommonUtil.elementExists(this.path)) {
-                throw new FileNotFoundException();
-            }
-
-            if (content == null) {
-                content = getContentToWrite();
-            }
-    
+            content = getContentToWrite();
             writer.write(content);
-    
             System.out.println("writer: successfully wrote to " + filename);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            writer.close();
+            if (writer != null) writer.close();
         }
+    }
+
+    private boolean validateFilename(String filename) {
+        return filename == null || filename.isEmpty();
     }
 
     public String getContentToWrite() {
@@ -63,11 +61,8 @@ public class WriteFileCommand extends FileCommand {
 
         try {
             while(!line.equals(":quit")) {
-                if (!line.isEmpty()) {
-                    content.append(line);
-                    content.append(System.lineSeparator());
-                }
-                
+                appendLine(line, content);
+
                 System.out.print("> ");
                 line = reader.readLine();
             }
@@ -76,5 +71,12 @@ public class WriteFileCommand extends FileCommand {
         }
 
         return content.toString();
+    }
+
+    private void appendLine(String line, StringBuilder content) {
+        if (!line.isEmpty()) {
+            content.append(line);
+            content.append(System.lineSeparator());
+        }
     }
 }
